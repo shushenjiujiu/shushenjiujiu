@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <input type="text" id="inputText">
+  <button onclick="saveAndShow()">保存并显示</button>
+  <div id="displayArea"></div>
+
+  <script>
+    async function saveAndShow() {
+      const text = document.getElementById('inputText').value;
+      // 发送保存请求
+      await fetch('http://localhost:3000/save', {
+        method: 'POST',
+        body: JSON.stringify({ text }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      // 读取并显示数据
+      const response = await fetch('http://localhost:3000/data');
+      const data = await response.json();
+      document.getElementById('displayArea').textContent = data.text;
+    }
+  </script>
+</body>
+</html>
